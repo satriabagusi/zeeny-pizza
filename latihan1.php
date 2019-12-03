@@ -1,6 +1,7 @@
 <?php
   $data = file_get_contents('data/pizza.json');
   $menu = json_decode($data, true);
+  $menu = $menu["menu"];
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,7 +13,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Zeeny Pizza!</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -25,7 +26,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Home</a>
+      <a class="nav-item nav-link active" href="#">All Menu</a>
     </div>
   </div>
   </div>
@@ -39,17 +40,19 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <img src="img/menu/american-favourite.jpg" class="card-img-top" >
+        <?php foreach($menu as $row) : ?>
+        <div class="col-md-4 ">
+          <div class="card mb-4">
+            <img src="img/menu/<?= $row['gambar'];?>" class="card-img-top" >
             <div class="card-body">
-              <h5 class="card-title">American Favourite</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <h4 class="card-title d-inline mr-5">Rp. 119.000-, </h4>
+              <h5 class="card-title"><?= $row['nama'];?></h5>
+              <p class="card-text"><?= $row['deskripsi'];?></p>
+              <h4 class="card-title d-inline mr-5">Rp. <?=number_format($row['harga'],0,",",".") ;?> </h4>
               <button class="btn btn-sm btn-warning ml-4">Order Now</button>
             </div>
           </div>
         </div>
+        <?php endforeach; ?>
       </div>
     </div>
 
